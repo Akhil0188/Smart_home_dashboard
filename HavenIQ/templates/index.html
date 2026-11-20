@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HavenIQ — Smart Home Monitoring &amp; Control</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='logo.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-temp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></symbol>
+    <symbol id="i-door" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v17M3 21h18"/><path d="M15 12h.01"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+    <symbol id="i-energy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="18" height="12" rx="2"/><path d="M23 13v-2M5 10v4M9 10v4M13 10v4"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></symbol>
+    <symbol id="i-fan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.6"/><path d="M12 10.4C12 6 11 3 8.5 3 6.6 3 6 5 7.5 7c1 1.3 2.8 2.6 4.5 3.4zM13.6 12c4.4 0 7.4-1 7.4-3.5 0-1.9-2-2.5-4-1-1.300 1-2.600 2.800-3.400 4.500zM12 13.6c0 4.400 1 7.400 3.500 7.400 1.900 0 2.500-2 1-4-1-1.300-2.800-2.600-4.500-3.400zM10.400 12C6 12 3 13 3 15.500c0 1.900 2 2.500 4 1 1.300-1 2.600-2.800 3.400-4.500z"/></symbol>
+    <symbol id="i-ac" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20M4.900 4.900l14.200 14.200M19.100 4.900 4.900 19.100M9 4l3 2 3-2M9 20l3-2 3 2M4 9l2 3-2 3M20 9l-2 3 2 3"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <img src="{{ url_for('static', filename='logo.svg') }}" alt="HavenIQ logo" width="38" height="38">
+      <div><strong>HavenIQ</strong><span>Smart Home</span></div>
+    </div>
+    <nav>
+      <a href="#overview" class="active"><svg class="ic"><use href="#i-grid"/></svg>Overview</a>
+      <a href="#analytics"><svg class="ic"><use href="#i-activity"/></svg>Analytics</a>
+      <a href="#devices"><svg class="ic"><use href="#i-bulb"/></svg>Device Control</a>
+      <a href="#door"><svg class="ic"><use href="#i-door"/></svg>Door Monitor</a>
+      <a href="#readings"><svg class="ic"><use href="#i-list"/></svg>Recent Readings</a>
+      <a href="#system"><svg class="ic"><use href="#i-server"/></svg>System Status</a>
+    </nav>
+    <div class="sidebar-foot">IoT-Based Smart Home Automation and Monitoring System</div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+      <div class="title">
+        <h1>HavenIQ — Smart Home Monitoring &amp; Control</h1>
+        <p id="clock">--</p>
+      </div>
+      <div class="top-right">
+        <span class="pill" id="mqttPill" data-tone="muted"><i class="dot"></i><span>MQTT: checking…</span></span>
+        <span class="refresh" id="refreshInd" title="Auto-refresh"><svg class="ic"><use href="#i-refresh"/></svg><span id="refreshText">Syncing…</span></span>
+      </div>
+    </header>
+
+    <div class="banner" id="banner" hidden></div>
+
+    <main>
+      <section id="overview">
+        <h2 class="section-title">Live Sensors</h2>
+        <div class="cards">
+          <article class="card" id="card-temp" data-tone="muted">
+            <div class="card-head"><span class="chip c-temp"><svg class="ic"><use href="#i-temp"/></svg></span><span class="label">Temperature</span><span class="status" id="st-temp">--</span></div>
+            <div class="value"><span id="v-temp">--</span><small>°C</small></div>
+            <div class="bar"><i id="b-temp"></i></div>
+          </article>
+          <article class="card" id="card-hum" data-tone="muted">
+            <div class="card-head"><span class="chip c-hum"><svg class="ic"><use href="#i-drop"/></svg></span><span class="label">Humidity</span><span class="status" id="st-hum">--</span></div>
+            <div class="value"><span id="v-hum">--</span><small>%</small></div>
+            <div class="bar"><i id="b-hum"></i></div>
+          </article>
+          <article class="card" id="card-light" data-tone="muted">
+            <div class="card-head"><span class="chip c-light"><svg class="ic"><use href="#i-sun"/></svg></span><span class="label">Light Intensity</span><span class="status" id="st-light">--</span></div>
+            <div class="value"><span id="v-light">--</span><small>lux</small></div>
+            <div class="bar"><i id="b-light"></i></div>
+          </article>
+          <article class="card" id="card-door" data-tone="muted">
+            <div class="card-head"><span class="chip c-door"><svg class="ic"><use href="#i-door"/></svg></span><span class="label">Door</span><span class="status" id="st-door">--</span></div>
+            <div class="value"><span id="v-door">--</span></div>
+            <div class="bar"><i id="b-door"></i></div>
+          </article>
+          <article class="card" id="card-power" data-tone="muted">
+            <div class="card-head"><span class="chip c-power"><svg class="ic"><use href="#i-bolt"/></svg></span><span class="label">Power Consumption</span><span class="status" id="st-power">--</span></div>
+            <div class="value"><span id="v-power">--</span><small>W</small></div>
+            <div class="bar"><i id="b-power"></i></div>
+          </article>
+          <article class="card" id="card-energy" data-tone="muted">
+            <div class="card-head"><span class="chip c-energy"><svg class="ic"><use href="#i-energy"/></svg></span><span class="label">Energy Usage</span><span class="status" id="st-energy">--</span></div>
+            <div class="value"><span id="v-energy">--</span><small>kWh</small></div>
+            <div class="bar"><i id="b-energy"></i></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="analytics">
+        <h2 class="section-title">Charts &amp; Analytics <small id="histNote"></small></h2>
+        <div class="charts">
+          <div class="panel wide"><h3>Temperature &amp; Humidity</h3><div class="chart-box"><canvas id="chTH"></canvas><div class="chart-empty" hidden>No readings yet</div></div></div>
+          <div class="panel"><h3>Light Intensity</h3><div class="chart-box"><canvas id="chLight"></canvas><div class="chart-empty" hidden>No readings yet</div></div></div>
+          <div class="panel"><h3>Power Consumption</h3><div class="chart-box"><canvas id="chPower"></canvas><div class="chart-empty" hidden>No readings yet</div></div></div>
+          <div class="panel wide"><h3>Energy Usage</h3><div class="chart-box"><canvas id="chEnergy"></canvas><div class="chart-empty" hidden>No readings yet</div></div></div>
+        </div>
+      </section>
+
+      <section id="devices">
+        <h2 class="section-title">Device Control <small>commands go out over MQTT; the state shown is what the device reports back</small></h2>
+        <div class="dev-bar">
+          <span class="pill" id="devLink" data-tone="muted"><i class="dot"></i><span>Device Control: checking…</span></span>
+          <span class="muted-text" id="devNote"></span>
+        </div>
+        <div class="banner" id="devBanner" hidden></div>
+        <div class="devices">
+          <article class="panel device" data-device="light" data-state="UNKNOWN">
+            <div class="dev-head"><span class="chip c-light"><svg class="ic"><use href="#i-bulb"/></svg></span>
+              <div><h3>Light</h3><span class="dev-status"><i class="dot"></i><b>UNKNOWN</b></span></div></div>
+            <div class="seg" role="group" aria-label="Light control">
+              <button type="button" class="seg-btn" data-cmd="OFF">OFF</button><button type="button" class="seg-btn" data-cmd="ON">ON</button>
+            </div>
+            <p class="dev-msg">Waiting for the device…</p>
+          </article>
+          <article class="panel device" data-device="fan" data-state="UNKNOWN">
+            <div class="dev-head"><span class="chip c-hum"><svg class="ic"><use href="#i-fan"/></svg></span>
+              <div><h3>Fan</h3><span class="dev-status"><i class="dot"></i><b>UNKNOWN</b></span></div></div>
+            <div class="seg" role="group" aria-label="Fan control">
+              <button type="button" class="seg-btn" data-cmd="OFF">OFF</button><button type="button" class="seg-btn" data-cmd="ON">ON</button>
+            </div>
+            <p class="dev-msg">Waiting for the device…</p>
+          </article>
+          <article class="panel device" data-device="ac" data-state="UNKNOWN">
+            <div class="dev-head"><span class="chip c-energy"><svg class="ic"><use href="#i-ac"/></svg></span>
+              <div><h3>AC</h3><span class="dev-status"><i class="dot"></i><b>UNKNOWN</b></span></div></div>
+            <div class="seg" role="group" aria-label="AC control">
+              <button type="button" class="seg-btn" data-cmd="OFF">OFF</button><button type="button" class="seg-btn" data-cmd="ON">ON</button>
+            </div>
+            <p class="dev-msg">Waiting for the device…</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="door" class="two">
+        <div class="panel door-panel" id="doorPanel" data-tone="muted">
+          <h3>Door Monitoring</h3>
+          <div class="door-state">
+            <span class="door-icon"><svg class="ic"><use href="#i-door"/></svg></span>
+            <div>
+              <div class="door-big" id="doorBig">--</div>
+              <div class="muted-text">Last update: <span id="doorUpdated">--</span></div>
+              <div class="muted-text">Last change: <span id="doorChanged">--</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Door Status History</h3>
+          <ul class="events" id="doorEvents"><li class="muted-text">No door data yet</li></ul>
+        </div>
+      </section>
+
+      <section id="readings">
+        <h2 class="section-title">Recent Sensor Readings</h2>
+        <div class="panel table-wrap">
+          <table>
+            <thead><tr><th>Time</th><th>Temperature</th><th>Humidity</th><th>Light</th><th>Door</th><th>Power</th><th>Energy</th></tr></thead>
+            <tbody id="recentBody"><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="system">
+        <h2 class="section-title">System Status</h2>
+        <div class="sys">
+          <div class="panel sys-item"><span class="label">Flask Backend</span><span class="pill" id="sysBackend" data-tone="muted"><i class="dot"></i><span>--</span></span><small id="sysBackendNote"></small></div>
+          <div class="panel sys-item"><span class="label">MQTT Broker</span><span class="pill" id="sysMqtt" data-tone="muted"><i class="dot"></i><span>--</span></span><small id="sysMqttNote"></small></div>
+          <div class="panel sys-item"><span class="label">Database</span><span class="pill" id="sysDb" data-tone="muted"><i class="dot"></i><span>--</span></span><small id="sysDbNote"></small></div>
+          <div class="panel sys-item"><span class="label">Last Sensor Update</span><span class="pill" id="sysData" data-tone="muted"><i class="dot"></i><span>--</span></span><small id="sysDataNote"></small></div>
+        </div>
+      </section>
+    </main>
+    <footer class="foot">HavenIQ · sensors read from <code>smarthome.db</code> (read-only) · device states come only from MQTT status messages</footer>
+  </div>
+</div>
+
+<script>window.HAVENIQ = { refreshMs: {{ refresh_ms }}, historyPoints: {{ history_points }} };</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
